@@ -50,16 +50,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [1] = LAYOUT_universal(
     _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , KC_BTN4  , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
     _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , KC_BTN1  , KC_BTN2  , KC_BTN3  , _______  ,
-                          _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , KC_BTN5
+                          _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
     XXXXXXX  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                        KC_INS   , KC_HOME  , KC_UP    , KC_END   , KC_RALT  , KC_RCTL  ,
-    _______  , KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   ,                                        KC_PGUP  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_BTN4  , _______  ,
-    _______  , KC_F11   , KC_F12   , KC_PSCR  , KC_SCRL  , KC_PAUS  ,                                        KC_PGDN  , SCRL_MO  , KC_BTN1  , KC_BTN2  , KC_BTN3  , _______  ,
-                          _______  , _______  , TG(2)    , _______  , _______  ,                  ALT_T(KC_DEL),_______          , _______  , _______  , KC_BTN5
+    _______  , KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   ,                                        KC_PGUP  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_BTN5  , _______  ,
+    _______  , KC_F11   , KC_F12   , KC_PSCR  , KC_SCRL  , KC_PAUS  ,                                        KC_PGDN  , KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN3  , _______  ,
+                          _______  , _______  , TG(2)    , _______  , _______  ,                  ALT_T(KC_DEL),_______          , _______  , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
@@ -111,9 +111,6 @@ void oledkit_render_info_user(void) {
 #endif
 
 // レイヤーでのスクロールモード切り替えと色設定
-#define COL_H(x) (uint8_t)(256 * (x) / 8)
-static uint8_t color_h_table[8] = { 0, COL_H(3), COL_H(4), COL_H(5), COL_H(6), COL_H(7), COL_H(0), COL_H(1) };
-
 layer_state_t layer_state_set_user(layer_state_t state) {
   uint8_t layer = get_highest_layer(state);
 
@@ -122,7 +119,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   if (layer == 0) {
     rgblight_sethsv(0, 0, 48);
   } else {
-    rgblight_sethsv(color_h_table[layer], 255, 64);
+    rgblight_sethsv((layer + 2) << 5, 255, 64);
   }
 
   return state;
@@ -148,7 +145,17 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
 // Tap Danceの設定
 #ifdef TAP_DANCE_ENABLE
 tap_dance_action_t tap_dance_actions[] = {
-  [TD_L2] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_NO, 2),
+  [TD_L2] = ACTION_TAP_DANCE_LAYER_TOGGLE(SCRL_MO, 2),
   [TD_L4] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_NO, 4),
+};
+#endif
+
+// Comboの設定
+#ifdef COMBO_ENABLE
+const uint16_t PROGMEM combo_btn4[] = { KC_BTN1, KC_BTN2, COMBO_END };
+const uint16_t PROGMEM combo_btn5[] = { KC_BTN2, KC_BTN3, COMBO_END };
+combo_t key_combos[] = {
+  COMBO(combo_btn4, KC_BTN4),
+  COMBO(combo_btn5, KC_BTN5),
 };
 #endif

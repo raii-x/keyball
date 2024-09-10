@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#    define RGBLIGHT_EFFECT_SNAKE
 //#    define RGBLIGHT_EFFECT_KNIGHT
 //#    define RGBLIGHT_EFFECT_CHRISTMAS
-#    define RGBLIGHT_EFFECT_STATIC_GRADIENT
+//#    define RGBLIGHT_EFFECT_STATIC_GRADIENT
 //#    define RGBLIGHT_EFFECT_RGB_TEST
 //#    define RGBLIGHT_EFFECT_ALTERNATING
 //#    define RGBLIGHT_EFFECT_TWINKLE
@@ -37,6 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #define AUTO_MOUSE_DEFAULT_LAYER 1
+
+// ファームウェアのサイズを削減
+#define NO_ACTION_ONESHOT
 
 // レイヤー追加
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
