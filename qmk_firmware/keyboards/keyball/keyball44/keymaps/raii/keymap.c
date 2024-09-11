@@ -99,17 +99,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-#ifdef OLED_ENABLE
-
-#    include "lib/oledkit/oledkit.h"
-
-void oledkit_render_info_user(void) {
-    keyball_oled_render_keyinfo();
-    keyball_oled_render_ballinfo();
-    keyball_oled_render_layerinfo();
-}
-#endif
-
 // レイヤーでのスクロールモード切り替えと色設定
 layer_state_t layer_state_set_user(layer_state_t state) {
   uint8_t layer = get_highest_layer(state);
@@ -124,6 +113,26 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
   return state;
 }
+
+// OLEDの設定
+#ifdef OLED_ENABLE
+#include "lib/oledkit/oledkit.h"
+
+void oledkit_render_info_user(void) {
+  keyball_oled_render_keyinfo();
+  keyball_oled_render_ballinfo();
+  keyball_oled_render_layerinfo();
+}
+
+// ファームウェアのサイズを削減するためロゴの代わりにテキストを表示
+void oledkit_render_logo_user(void) {
+  oled_write_P(PSTR(
+    "\n"
+    "      Keyball44\n"
+    "    built by raii"
+    ), false);
+}
+#endif
 
 // Quick Tapの設定
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
