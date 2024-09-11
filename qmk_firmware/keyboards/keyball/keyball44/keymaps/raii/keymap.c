@@ -99,11 +99,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+static bool scroll_pressed = false;
+
+static void update_scroll_mode(layer_state_t state) {
+  keyball_set_scroll_mode(scroll_pressed || get_highest_layer(state) == 4);
+}
+
+static void set_scroll_pressed(bool pressed) {
+  scroll_pressed = pressed;
+  update_scroll_mode(layer_state);
+}
+
 // レイヤーでのスクロールモード切り替えと色設定
 layer_state_t layer_state_set_user(layer_state_t state) {
-  uint8_t layer = get_highest_layer(state);
+  update_scroll_mode(state);
 
-  keyball_set_scroll_mode(layer == 4);
+  uint8_t layer = get_highest_layer(state);
 
   if (layer == 0) {
     rgblight_sethsv(0, 0, 48);
@@ -153,8 +164,22 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
 
 // Tap Danceの設定
 #ifdef TAP_DANCE_ENABLE
+static void td_l2_finished(tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    set_scroll_pressed(true);
+  } else {
+    layer_invert(2);
+  }
+}
+
+static void td_l2_reset(tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    set_scroll_pressed(false);
+  }
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-  [TD_L2] = ACTION_TAP_DANCE_LAYER_TOGGLE(SCRL_MO, 2),
+  [TD_L2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_l2_finished, td_l2_reset),
   [TD_L4] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_NO, 4),
 };
 #endif
