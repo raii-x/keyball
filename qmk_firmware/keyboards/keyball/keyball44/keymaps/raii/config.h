@@ -45,6 +45,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
 
 // タップ・ホールド調整
-#define TAPPING_TERM 150
+#define TAPPING_TERM 175
 #define PERMISSIVE_HOLD
 #define QUICK_TAP_TERM_PER_KEY
