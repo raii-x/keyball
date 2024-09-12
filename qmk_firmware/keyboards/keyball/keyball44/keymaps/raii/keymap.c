@@ -19,18 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
-
-#define KC_J_AT KC_LBRC // JISキーボードでの@キー
-#define KC_J_CC KC_EQL  // JISキーボードでの^キー
-#define KC_J_BS KC_INT1 // JISキーボードでの右下の\キー
-#define KC_J_YN KC_INT3 // JISキーボードでの右上の¥キー
-#define KC_J_LB KC_RBRC // JISキーボードでの[キー
-#define KC_J_RB KC_BSLS // JISキーボードでの]キー
-#define KC_J_CL KC_QUOT // JISキーボードでの:キー
-#define KC_HEN  KC_INT4 // 変換
-#define KC_MHEN KC_INT5 // 無変換
-#define KC_HNZN KC_GRV  // 半角/全角
-#define KC_KANA KC_INT2 // かな
+#include "keymap_japanese.h"
 
 // Tap Danceの宣言
 enum {
@@ -42,10 +31,10 @@ enum {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
   [0] = LAYOUT_universal(
-    KC_J_AT  , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_J_CC  ,
+    JP_AT    , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , JP_CIRC  ,
     KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , KC_ENT   ,
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_MINS  , KC_RSFT  ,
-                          TD(TD_L4), KC_LGUI  ,LT(2,KC_MHEN),LT(3,KC_SPC),LT(4,KC_ESC),           ALT_T(KC_BSPC),CTL_T(KC_HEN)   , _______  , _______  , TD(TD_L2)
+                          TD(TD_L4), KC_LGUI  ,LT(2,JP_MHEN),LT(3,KC_SPC),LT(4,KC_ESC),           ALT_T(KC_BSPC),CTL_T(JP_HENK)  , _______  , _______  , TD(TD_L2)
   ),
 
   [1] = LAYOUT_universal(
@@ -63,15 +52,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [3] = LAYOUT_universal(
-    _______  , S(KC_1)  , S(KC_6)  ,S(KC_J_YN), S(KC_7)  ,S(KC_J_LB),                                       S(KC_J_RB), S(KC_2)  ,S(KC_J_BS),S(KC_J_CL),S(KC_SLSH), S(KC_3)  ,
+    _______  , S(KC_1)  , S(KC_6)  , S(JP_YEN), S(KC_7)  ,S(JP_LBRC),                                       S(JP_RBRC), S(KC_2)  ,S(JP_BSLS),S(JP_COLN),S(KC_SLSH), S(KC_3)  ,
     _______  , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                        KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
-    _______  , S(KC_4)  , S(KC_5)  , KC_J_YN  , S(KC_8)  , KC_J_LB  ,                                        KC_J_RB  , S(KC_9)  , KC_J_BS  , KC_J_CL  , KC_SLSH  , _______  ,
+    _______  , S(KC_4)  , S(KC_5)  , JP_YEN   , S(KC_8)  , JP_LBRC  ,                                        JP_RBRC  , S(KC_9)  , JP_BSLS  , JP_COLN  , KC_SLSH  , _______  ,
                           _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , _______
   ),
 
   [4] = LAYOUT_universal(
     KC_NUM   , KC_PSLS  , KC_P7    , KC_P8    , KC_P9    , KC_PMNS  ,                                        AML_TO   , AML_D50  , AML_I50  , SCRL_DVD , SCRL_DVI , KBC_SAVE ,
-    _______  , KC_PAST  , KC_P4    , KC_P5    , KC_P6    , KC_PPLS  ,                                        RGB_TOG  , KC_HNZN  , KC_CAPS  , KC_KANA  , KC_APP   , _______  ,
+    _______  , KC_PAST  , KC_P4    , KC_P5    , KC_P6    , KC_PPLS  ,                                        RGB_TOG  , JP_ZKHK  , KC_CAPS  , JP_KANA  , KC_APP   , _______  ,
     _______  , XXXXXXX  , KC_P1    , KC_P2    , KC_P3    , KC_PENT  ,                                        CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , XXXXXXX  , _______  ,
                           KC_P0    , KC_PDOT  , _______  , _______  , TG(4)    ,                  _______  , _______             , _______  , _______  , KBC_RST
   ),
@@ -149,8 +138,8 @@ void oledkit_render_logo_user(void) {
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // 無変換・変換の場合はQuick Tapを無効化
-    case LT(2, KC_MHEN):
-    case LCTL_T(KC_HEN):
+    case LT(2, JP_MHEN):
+    case LCTL_T(JP_HENK):
       return 0;
 
     // スペースの場合は誤入力を防ぐためQuick Tap Termを短くする
