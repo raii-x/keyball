@@ -115,8 +115,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
-  update_scroll_mode(state);
-  return state;
+  return layer_state_set_user(state);
 }
 
 // OLEDの設定
