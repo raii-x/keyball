@@ -250,8 +250,12 @@ tap_dance_action_t tap_dance_actions[] = {
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM combo_btn4[] = { KC_BTN1, KC_BTN2, COMBO_END };
 const uint16_t PROGMEM combo_btn5[] = { KC_BTN2, KC_BTN3, COMBO_END };
+const uint16_t PROGMEM combo_ctrl_f4[] = { CK_CSTB, CK_CTAB, COMBO_END };
+const uint16_t PROGMEM combo_alt_f4[] = { CK_CTAB, CK_ATAB, COMBO_END };
 combo_t key_combos[] = {
   COMBO(combo_btn4, KC_BTN4),
   COMBO(combo_btn5, KC_BTN5),
+  COMBO(combo_ctrl_f4, C(KC_F4)),
+  COMBO(combo_alt_f4, A(KC_F4)),
 };
 #endif
