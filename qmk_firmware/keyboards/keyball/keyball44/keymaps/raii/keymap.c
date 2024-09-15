@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // レイヤーの定義
 enum layers {
   _DEF, // Default
+  _GAM, // Game
   _AMO, // Auto Mouse
   _F_M, // Function / Move
   _N_S, // Number / Symbol
@@ -47,9 +48,16 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DEF] = LAYOUT_universal(
     JP_AT    , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , JP_CIRC  ,
-    KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , KC_ENT   ,
+    KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     ,RSFT_T(KC_SCLN),KC_ENT,
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_MINS  , KC_RSFT  ,
                          TD(TD_P_A), KC_LGUI  ,LT(_F_M,JP_MHEN),LT(_N_S,KC_SPC),LT(_P_A,KC_ESC),  ALT_T(KC_BSPC),CTL_T(JP_HENK)  , _______  , _______  , TD(TD_F_M)
+  ),
+
+  [_GAM] = LAYOUT_universal(
+    KC_TAB   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_BSPC  ,
+    KC_LSFT  , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , KC_ENT   ,
+    KC_LCTL  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
+                          TG(_GAM) , KC_LALT  , KC_SPC   , MO(_N_S) , KC_ESC ,                    MO(_F_M) , KC_RCTL             , _______  , _______  , KC_RALT
   ),
 
   [_AMO] = LAYOUT_universal(
@@ -67,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_N_S] = LAYOUT_universal(
-    _______  , S(KC_1)  , S(KC_6)  , S(JP_YEN), S(KC_7)  ,S(JP_LBRC),                                       S(JP_RBRC), S(KC_2)  ,S(JP_BSLS),S(JP_COLN),S(KC_SLSH), S(KC_3)  ,
+    KC_CAPS  , S(KC_1)  , S(KC_6)  , S(JP_YEN), S(KC_7)  ,S(JP_LBRC),                                       S(JP_RBRC), S(KC_2)  ,S(JP_BSLS),S(JP_COLN),S(KC_SLSH), S(KC_3)  ,
     _______  , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                        KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
     _______  , S(KC_4)  , S(KC_5)  , JP_YEN   , S(KC_8)  , JP_LBRC  ,                                        JP_RBRC  , S(KC_9)  , JP_BSLS  , JP_COLN  , KC_SLSH  , _______  ,
                           _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , _______
@@ -75,16 +83,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_P_A] = LAYOUT_universal(
     KC_NUM   , KC_PSLS  , KC_P7    , KC_P8    , KC_P9    , KC_PMNS  ,                                        AML_TO   , AML_D50  , AML_I50  , SCRL_DVD , SCRL_DVI , KBC_SAVE ,
-    KC_SCRL  , KC_PAST  , KC_P4    , KC_P5    , KC_P6    , KC_PPLS  ,                                        RGB_TOG  , JP_ZKHK  , KC_CAPS  , JP_KANA  , KC_APP   , _______  ,
-    KC_PAUS  , XXXXXXX  , KC_P1    , KC_P2    , KC_P3    , KC_PENT  ,                                        CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , XXXXXXX  , _______  ,
+    KC_SCRL  , KC_PAST  , KC_P4    , KC_P5    , KC_P6    , KC_PPLS  ,                                        RGB_TOG  , TG(_GAM) , JP_ZKHK  , JP_KANA  , KC_APP   , SSNP_VRT ,
+    KC_PAUS  , XXXXXXX  , KC_P1    , KC_P2    , KC_P3    , KC_PENT  ,                                        CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , SSNP_HOR , SSNP_FRE ,
                           KC_P0    , KC_PDOT  , _______  , _______  , TG(_P_A) ,                  _______  , _______             , _______  , _______  , KBC_RST
-  ),
-
-  [5] = LAYOUT_universal(
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
-                          _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , _______
   ),
 
   [6] = LAYOUT_universal(
@@ -126,7 +127,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   if (layer == 0) {
     rgblight_sethsv(0, 0, 48);
   } else {
-    rgblight_sethsv((layer + 2) << 5, 255, 64);
+    rgblight_sethsv((layer + 1) << 5, 255, 64);
   }
 
   // Layer Function/Moveが解除された場合、カスタムキーコードの処理で押下されたCtrlとAltを解除
