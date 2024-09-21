@@ -251,7 +251,7 @@ static void td_f_m_reset(tap_dance_state_t *state, void *user_data) {
 
 tap_dance_action_t tap_dance_actions[] = {
   [TD_F_M] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_f_m_finished, td_f_m_reset),
-  [TD_P_A] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_NO, _P_A),
+  [TD_P_A] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_LCTL, _P_A),
 };
 #endif
 
