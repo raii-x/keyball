@@ -37,13 +37,6 @@ enum {
   TD_P_A,
 };
 
-// カスタムキーコードの宣言
-enum custom_keycodes {
-  CK_CTAB = SAFE_RANGE, // Ctrl + Tab
-  CK_CSTB,              // Ctrl + Shift + Tab
-  CK_ATAB,              // Alt + Tab
-};
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DEF] = LAYOUT_universal(
@@ -70,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_F_M] = LAYOUT_universal(
     KC_PSCR  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                        KC_INS   , KC_HOME  , KC_UP    , KC_END   , KC_RALT  , KC_RCTL  ,
     _______  , KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   ,                                        KC_PGUP  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_BTN5  , _______  ,
-    _______  , KC_F11   , KC_F12   , CK_CSTB  , CK_CTAB  , CK_ATAB  ,                                        KC_PGDN  , KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN3  , _______  ,
+    _______  , KC_F11   , KC_F12   , XXXXXXX  , XXXXXXX  , XXXXXXX  ,                                        KC_PGDN  , KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN3  , _______  ,
                           _______  , _______  , TG(_F_M) , _______  , _______  ,                  ALT_T(KC_DEL),_______          , _______  , _______  , _______
   ),
 
@@ -115,9 +108,6 @@ static void set_scroll_pressed(bool pressed) {
   update_scroll_mode(layer_state);
 }
 
-static bool ctrl_tab_active = false;
-static bool alt_tab_active = false;
-
 layer_state_t layer_state_set_user(layer_state_t state) {
   update_scroll_mode(state);
 
@@ -130,70 +120,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_sethsv((layer + 1) << 5, 255, 64);
   }
 
-  // Layer Function/Moveが解除された場合、カスタムキーコードの処理で押下されたCtrlとAltを解除
-  if (IS_LAYER_OFF_STATE(state, _F_M)) {
-    if (ctrl_tab_active) {
-      unregister_code(KC_LCTL);
-      ctrl_tab_active = false;
-    }
-    if (alt_tab_active) {
-      unregister_code(KC_LALT);
-      alt_tab_active = false;
-    }
-  }
-
   return state;
 }
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
   return layer_state_set_user(state);
-}
-
-// カスタムキーコードの処理
-// (CK_CTAB, CK_CSTB)が押された場合、Ctrlを押下状態にしてから(Tab, Shift + Tab)を送信する
-// CK_ATABが押された場合、Altを押下状態にしてからTabを送信する
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case CK_CTAB:
-      if (record->event.pressed) {
-        if (!ctrl_tab_active) {
-          register_code(KC_LCTL);
-          ctrl_tab_active = true;
-        }
-        register_code(KC_TAB);
-      } else {
-        unregister_code(KC_TAB);
-      }
-      break;
-
-    case CK_CSTB:
-      if (record->event.pressed) {
-        if (!ctrl_tab_active) {
-          register_code(KC_LCTL);
-          ctrl_tab_active = true;
-        }
-        register_code(KC_LSFT);
-        register_code(KC_TAB);
-      } else {
-        unregister_code(KC_TAB);
-        unregister_code(KC_LSFT);
-      }
-      break;
-
-    case CK_ATAB:
-      if (record->event.pressed) {
-        if (!alt_tab_active) {
-          register_code(KC_LALT);
-          alt_tab_active = true;
-        }
-        register_code(KC_TAB);
-      } else {
-        unregister_code(KC_TAB);
-      }
-      break;
-  }
-
-  return true;
 }
 
 // OLEDの設定
@@ -259,13 +190,9 @@ tap_dance_action_t tap_dance_actions[] = {
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM combo_btn4[] = { KC_BTN1, KC_BTN2, COMBO_END };
 const uint16_t PROGMEM combo_btn5[] = { KC_BTN2, KC_BTN3, COMBO_END };
-const uint16_t PROGMEM combo_ctrl_f4[] = { CK_CSTB, CK_CTAB, COMBO_END };
-const uint16_t PROGMEM combo_alt_f4[] = { CK_CTAB, CK_ATAB, COMBO_END };
 
 combo_t key_combos[] = {
   COMBO(combo_btn4, KC_BTN4),
   COMBO(combo_btn5, KC_BTN5),
-  COMBO(combo_ctrl_f4, C(KC_F4)),
-  COMBO(combo_alt_f4, A(KC_F4)),
 };
 #endif
