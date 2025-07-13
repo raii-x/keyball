@@ -46,9 +46,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DEF] = LAYOUT_universal(
     KC_LCTL  , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , JP_CIRC  ,
-    KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     ,RSFT_T(KC_SCLN),KC_ENT,
-    KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_MINS  ,TD(TD_F_M),
-                         TD(TD_P_A), KC_LALT  ,LT(_F_M,JP_MHEN),LT(_N_S,KC_SPC),LT(_P_A,KC_ESC),  ALT_T(KC_BSPC),CTL_T(JP_HENK)  , _______  , _______  , CK_SCRL
+    KC_LSFT  , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     ,RSFT_T(KC_SCLN),KC_ENT,
+    KC_ESC   , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_MINS  ,TD(TD_F_M),
+                         TD(TD_P_A), KC_LALT  ,LT(_F_M,JP_MHEN),LT(_N_S,KC_SPC),LT(_P_A,KC_TAB),  ALT_T(KC_BSPC),CTL_T(JP_HENK)  , _______  , _______  , CK_SCRL
   ),
 
   [_GAM] = LAYOUT_universal(
@@ -66,16 +66,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_F_M] = LAYOUT_universal(
-    KC_PSCR  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                        KC_INS   , KC_HOME  , KC_UP    , KC_END   , KC_RALT  , KC_RCTL  ,
+    _______  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                        KC_INS   , KC_HOME  , KC_UP    , KC_END   , KC_RALT  , KC_RCTL  ,
     _______  , KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   ,                                        KC_PGUP  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_RSFT  , _______  ,
-    _______  , KC_F11   , KC_F12   , XXXXXXX  , XXXXXXX  , KC_CAPS  ,                                        KC_PGDN  , KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN3  , KC_BTN5  ,
+    _______  , KC_F11   , KC_F12   , KC_PSCR  , XXXXXXX  , KC_CAPS  ,                                        KC_PGDN  , KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN3  , KC_BTN5  ,
                           _______  , _______  , TG(_F_M) , _______  , _______  ,                  ALT_T(KC_DEL),_______          , _______  , _______  , _______
   ),
 
   [_N_S] = LAYOUT_universal(
-    KC_AT    , S(KC_1)  , S(KC_6)  , S(JP_YEN), S(KC_7)  ,S(JP_LBRC),                                       S(JP_RBRC), S(KC_2)  ,S(JP_BSLS),S(JP_COLN),S(KC_SLSH), S(KC_3)  ,
+    S(KC_3)  , S(KC_1)  , S(KC_6)  , S(JP_YEN), S(KC_7)  ,S(JP_LBRC),                                       S(JP_RBRC), S(KC_2)  ,S(JP_BSLS),S(JP_COLN),S(KC_SLSH), S(JP_AT) ,
     _______  , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                        KC_6     , KC_7     , KC_8     , KC_9     ,RSFT_T(KC_0),_______ ,
-    _______  , S(KC_4)  , S(KC_5)  , JP_YEN   , S(KC_8)  , JP_LBRC  ,                                        JP_RBRC  , S(KC_9)  , JP_BSLS  , JP_COLN  , KC_SLSH  , S(KC_AT) ,
+    _______  , S(KC_4)  , S(KC_5)  , JP_YEN   , S(KC_8)  , JP_LBRC  ,                                        JP_RBRC  , S(KC_9)  , JP_BSLS  , JP_COLN  , KC_SLSH  , JP_AT    ,
                           _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , _______
   ),
 
