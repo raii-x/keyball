@@ -28,13 +28,14 @@ enum layers {
   _AMO, // Auto Mouse
   _F_M, // Function / Move
   _N_S, // Number / Symbol
-  _P_A, // Pad / Adjust
+  _P_W, // Pad / Window
+  _ADJ, // Adjust
 };
 
 // Tap Danceの宣言
 enum {
   TD_F_M,
-  TD_P_A,
+  TD_P_W,
 };
 
 // カスタムキーコードの宣言
@@ -48,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL  , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , JP_CIRC  ,
     KC_LSFT  , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     ,RSFT_T(KC_SCLN),KC_ENT,
     KC_ESC   , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_MINS  ,TD(TD_F_M),
-                         TD(TD_P_A), KC_LALT  ,LT(_F_M,JP_MHEN),LT(_N_S,KC_SPC),LT(_P_A,KC_TAB),  RALT_T(KC_BSPC),RCTL_T(JP_HENK), _______  , _______  , CK_SCRL
+                         TD(TD_P_W), KC_LALT  ,LT(_F_M,JP_MHEN),LT(_N_S,KC_SPC),LT(_P_W,KC_TAB),  RALT_T(KC_BSPC),RCTL_T(JP_HENK), _______  , _______  , CK_SCRL
   ),
 
   [_GAM] = LAYOUT_universal(
@@ -68,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_F_M] = LAYOUT_universal(
     _______  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                        KC_INS   , KC_HOME  , KC_UP    , KC_END   , KC_RALT  , KC_RCTL  ,
     _______  , KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   ,                                        KC_PGUP  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_RSFT  , _______  ,
-    _______  , KC_F11   , KC_F12   , KC_PSCR  , XXXXXXX  , KC_CAPS  ,                                        KC_PGDN  , KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN3  , KC_BTN5  ,
+    _______  , KC_F11   , KC_F12   , KC_PSCR  , KC_SPC   , KC_CAPS  ,                                        KC_PGDN  , KC_BTN4  , KC_BTN1  , KC_BTN2  , KC_BTN3  , KC_BTN5  ,
                           _______  , _______  , TG(_F_M) , _______  , _______  ,                  RALT_T(KC_DEL),_______         , _______  , _______  , _______
   ),
 
@@ -76,21 +77,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     S(KC_3)  , S(KC_1)  , S(KC_6)  , S(JP_YEN), S(KC_7)  ,S(JP_LBRC),                                       S(JP_RBRC), S(KC_2)  ,S(JP_BSLS),S(JP_COLN),S(KC_SLSH), S(JP_AT) ,
     _______  , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                        KC_6     , KC_7     , KC_8     , KC_9     ,RSFT_T(KC_0),_______ ,
     _______  , S(KC_4)  , S(KC_5)  , JP_YEN   , S(KC_8)  , JP_LBRC  ,                                        JP_RBRC  , S(KC_9)  , JP_BSLS  , JP_COLN  , KC_SLSH  , JP_AT    ,
-                          _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , _______
+                          _______  , _______  , _______  , _______  , MO(_ADJ) ,                  _______  , _______             , _______  , _______  , _______
   ),
 
-  [_P_A] = LAYOUT_universal(
-    KC_NUM   , KC_PSLS  , KC_P7    , KC_P8    , KC_P9    , KC_PMNS  ,                                        AML_TO   , AML_D50  , AML_I50  , SCRL_DVD , SCRL_DVI , KBC_SAVE ,
-    KC_SCRL  , KC_PAST  , KC_P4    , KC_P5    , KC_P6    , KC_PPLS  ,                                        RGB_TOG  , TG(_GAM) , JP_ZKHK  , JP_KANA  , KC_APP   , SSNP_VRT ,
-    KC_PAUS  , XXXXXXX  , KC_P1    , KC_P2    , KC_P3    , KC_PENT  ,                                        CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , SSNP_HOR , SSNP_FRE ,
-                          KC_P0    , KC_PDOT  , _______  , _______  , TG(_P_A) ,                  _______  , _______             , _______  , _______  , KBC_RST
+  [_P_W] = LAYOUT_universal(
+    KC_NUM   , KC_PSLS  , KC_P7    , KC_P8    , KC_P9    , KC_PMNS  ,                                        XXXXXXX  ,LCTL(LGUI(KC_LEFT)),LGUI(KC_UP),LCTL(LGUI(KC_RGHT)),LGUI(KC_TAB),JP_ZKHK,
+    KC_SCRL  , KC_PAST  , KC_P4    , KC_P5    , KC_P6    , KC_PPLS  ,                                        XXXXXXX  ,LGUI(KC_LEFT),LGUI(KC_DOWN),LGUI(KC_RGHT),LSG(KC_RGHT),JP_KANA,
+    KC_PAUS  , XXXXXXX  , KC_P1    , KC_P2    , KC_P3    , KC_PENT  ,                                        XXXXXXX  ,LAG(KC_LEFT), XXXXXXX ,LAG(KC_RGHT), XXXXXXX  , KC_APP   ,
+                          KC_P0    , KC_PDOT  , _______  , MO(_ADJ) , TG(_P_W) ,                  _______  , _______             , _______  , _______  , TG(_GAM)
   ),
 
-  [6] = LAYOUT_universal(
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
-                          _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , _______
+  [_ADJ] = LAYOUT_universal(
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                        AML_TO   , AML_D50  , AML_I50  , SCRL_DVD , SCRL_DVI , KBC_SAVE ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                        XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , SSNP_VRT ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                        CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , SSNP_HOR , SSNP_FRE ,
+                          _______  , _______  , _______  , _______  , _______  ,                  _______  , _______             , _______  , _______  , KBC_RST
   ),
 
   [7] = LAYOUT_universal(
@@ -169,7 +170,7 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
 #ifdef TAP_DANCE_ENABLE
 tap_dance_action_t tap_dance_actions[] = {
   [TD_F_M] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_NO, _F_M),
-  [TD_P_A] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_LGUI, _P_A),
+  [TD_P_W] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_LGUI, _P_W),
 };
 #endif
 
