@@ -102,20 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-static bool scroll_pressed = false;
-
-static void update_scroll_mode(layer_state_t state) {
-  keyball_set_scroll_mode(scroll_pressed || get_highest_layer(state) == _P_A);
-}
-
-static void set_scroll_pressed(bool pressed) {
-  scroll_pressed = pressed;
-  update_scroll_mode(layer_state);
-}
-
 layer_state_t layer_state_set_user(layer_state_t state) {
-  update_scroll_mode(state);
-
   // レイヤーに応じてRGBの色を変更
   uint8_t layer = get_highest_layer(state);
 
@@ -135,7 +122,7 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 // カスタムキーコードの処理
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (keycode == CK_SCRL) {
-      set_scroll_pressed(record->event.pressed);
+      keyball_set_scroll_mode(record->event.pressed);
   }
 
   return true;
