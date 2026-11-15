@@ -182,6 +182,12 @@ combo_t key_combos[] = {
   COMBO(combo_btn4, KC_BTN4),
   COMBO(combo_btn5, KC_BTN5),
 };
+
+// Auto Mouseレイヤーでのみコンボを有効化
+// 他のレイヤーではコンボ判定の待ちをなくし、マウスボタンを即座に反応させる
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+  return get_highest_layer(layer_state | default_layer_state) == _AMO;
+}
 #endif
 
 // RGB Lightのタイムアウト機能
