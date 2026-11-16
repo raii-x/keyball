@@ -43,6 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ファームウェアのサイズを削減
 #define NO_ACTION_ONESHOT
+#define DYNAMIC_KEYMAP_MACRO_COUNT 0  // VIA/REMAPのマクロ機能を使わないため無効化
+
+// サブ側のOLEDにAdjustレイヤーのチートシートを表示するためレイヤー状態を同期
+#define SPLIT_LAYER_STATE_ENABLE
 
 // レイヤー追加
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
